@@ -75,6 +75,8 @@
             this.tbNote.Size = new System.Drawing.Size(389, 230);
             this.tbNote.TabIndex = 2;
             this.tbNote.Text = "";
+            this.tbNote.LinkClicked += new System.Windows.Forms.LinkClickedEventHandler(this.tbNote_LinkClicked);
+            this.tbNote.TextChanged += new System.EventHandler(this.tbNote_TextChanged);
             // 
             // timer1
             // 

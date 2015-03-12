@@ -251,5 +251,15 @@ namespace AttachNoteToWindow
         {
             this.TopMost = mTopmost.Checked;
         }
+
+        private void tbNote_LinkClicked(object sender, LinkClickedEventArgs e)
+        {           
+            System.Diagnostics.Process.Start(e.LinkText);
+        }
+
+        private void tbNote_TextChanged(object sender, EventArgs e)
+        {
+            // TODO: ensure a blank line comes after a URL
+        }
     }
 }

@@ -1,7 +1,13 @@
-﻿[ ] Make hyperlinks in notes open in default browser
+﻿[x] Make hyperlinks in notes open in default browser
 
 [x] P2: Default initial file (in AppData)
 [ ] Store a note object instead of simple text
+
+[ ] BIG: In case of browsers, associate note with URL of current tab, not the title
+	[ ] Chrome
+	[ ] Firefox
+	[ ] IE
+	[ ] Option to associate with (full url/page/domain)
 
 [x] Icon
 
