@@ -1,16 +1,17 @@
 ﻿[ ] Make hyperlinks in notes open in default browser
 
-[ ] P2: Default initial file (in AppData)
+[x] P2: Default initial file (in AppData)
 [ ] Store a note object instead of simple text
 
-[ ] Icon
+[x] Icon
 
+[ ] Expose file obfuscation in the UI
 
 [ ] Dock next to the relevant window
 	- Default: stick it next to the left edge, first try outside, then inside.
 	- P2: handle window sizing, store position 	
 
-[ ] If there is no note, show a button in the toolbar to create one instead
+[ ] If there is no note, show a topmost button over the app toolbar to create one instead
 
 [ ] Github cleanup
 	[ ] Upload executable 

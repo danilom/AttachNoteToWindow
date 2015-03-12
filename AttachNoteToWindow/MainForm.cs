@@ -12,7 +12,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Diagnostics;
 
-namespace LineConnector
+namespace AttachNoteToWindow
 {
     public partial class MainForm : Form
     {
@@ -153,12 +153,10 @@ namespace LineConnector
         {
             if (Properties.Settings.Default.FilePath == "")
             {
-                // Ask
-                if (!SelectNotesFile())
-                {
-                    MessageBox.Show("You must select a file. Exiting.");
-                    Application.Exit();
-                }
+                // Default path
+                var myDocsPath = System.Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                var path = Path.Combine(myDocsPath, "AttachNoteToWindow.json");
+                Properties.Settings.Default.FilePath = path;
             }
             return Properties.Settings.Default.FilePath;
         }
@@ -198,37 +196,6 @@ namespace LineConnector
         //  );
         [DllImport("user32.dll")]
         private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
-
-        /*
-        //HANDLE WINAPI OpenProcess(
-        //  __in  DWORD dwDesiredAccess,
-        //  __in  BOOL bInheritHandle,
-        //  __in  DWORD dwProcessId
-        //);
-        [DllImport("kernel32.dll")]
-        private static extern IntPtr OpenProcess(uint dwDesiredAccess, bool bInheritHandle, uint dwProcessId);
-
-        [DllImport("kernel32.dll")]
-        private static extern bool CloseHandle(IntPtr handle);
-
-        //  DWORD WINAPI GetModuleBaseName(
-        //      __in      HANDLE hProcess,
-        //      __in_opt  HMODULE hModule,
-        //      __out     LPTSTR lpBaseName,
-        //      __in      DWORD nSize
-        //  );
-        [DllImport("psapi.dll")]
-        private static extern uint GetModuleBaseName(IntPtr hWnd, IntPtr hModule, StringBuilder lpFileName, int nSize);
-
-        //  DWORD WINAPI GetModuleFileNameEx(
-        //      __in      HANDLE hProcess,
-        //      __in_opt  HMODULE hModule,
-        //      __out     LPTSTR lpFilename,
-        //      __in      DWORD nSize
-        //  );
-        [DllImport("psapi.dll")]
-        private static extern uint GetModuleFileNameEx(IntPtr hWnd, IntPtr hModule, StringBuilder lpFileName, int nSize);
-        */
 
         public static string GetTopWindowText()
         {

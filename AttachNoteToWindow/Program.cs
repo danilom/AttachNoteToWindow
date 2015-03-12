@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace LineConnector
+namespace AttachNoteToWindow
 {
     static class Program
     {

@@ -1,4 +1,4 @@
-﻿namespace LineConnector
+﻿namespace AttachNoteToWindow
 {
     partial class MainForm
     {
@@ -88,7 +88,7 @@
             this.mChangeDataFileLocation,
             this.mTopmost});
             this.settingsMenu.Name = "contextMenu";
-            this.settingsMenu.Size = new System.Drawing.Size(213, 70);
+            this.settingsMenu.Size = new System.Drawing.Size(213, 48);
             // 
             // mChangeDataFileLocation
             // 
@@ -129,7 +129,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "MainForm";
-            this.Text = "Attach Notes To Windows";
+            this.Text = "Attach Note To Window";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.settingsMenu.ResumeLayout(false);
             this.ResumeLayout(false);
