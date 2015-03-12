@@ -27,7 +27,7 @@ namespace AttachNoteToWindow
             LoadNotes();
         }
 
-        void NoteChanged(string newWindowTitle)
+        void StoreCurrentNote()
         {
             // Store old note
             if (_windowTitle != null)
@@ -40,18 +40,17 @@ namespace AttachNoteToWindow
                 {
                     _notes[_windowTitle] = tbNote.Text;
                 }
-                SaveNotes();
             }
+        }
 
-            // Switch
-            _windowTitle = newWindowTitle;
-
+        void ShowNewNote(string windowTitle)
+        {
             // Load note
-            tbLineName.Text = _windowTitle;
-            if (_notes.ContainsKey(_windowTitle))
+            tbLineName.Text = windowTitle;
+            if (_notes.ContainsKey(windowTitle))
             {
                 // Note exists
-                tbNote.Text = _notes[_windowTitle];
+                tbNote.Text = _notes[windowTitle];
                 tbNote.BackColor = Color.LightYellow;
 
                 // Show window
@@ -69,20 +68,28 @@ namespace AttachNoteToWindow
 
         void timer1_Tick(object sender, EventArgs e)
         {
-            var appName = GetTopWindowName();
+            var appName = Win32.GetTopWindowName();
             if (appName.StartsWith(MyProcessName))
             {
                 return;
             }
 
             // check vs an app list
-            var newWindowTitle = appName + ": " + GetTopWindowText();
+            var newWindowTitle = appName + ": " + Win32.GetTopWindowText();
             if (newWindowTitle == _windowTitle)
             {
                 return;
             }
 
-            NoteChanged(newWindowTitle);
+            var bounds = Win32.GetTopWindowBounds();
+
+            StoreCurrentNote();
+            SaveNotes();
+
+            // Switch
+            _windowTitle = newWindowTitle;
+
+            ShowNewNote(_windowTitle);
         }
 
         string _myProcessName;
@@ -180,54 +187,11 @@ namespace AttachNoteToWindow
         }
         #endregion
 
-        #region Win32
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
-
-        [DllImport("user32.dll")]
-        static extern int GetWindowTextLength(IntPtr hWnd);
-
-        //  int GetWindowText(
-        //      __in   HWND hWnd,
-        //      __out  LPTSTR lpString,
-        //      __in   int nMaxCount
-        //  );
-        [DllImport("user32.dll")]
-        private static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
-
-        //  DWORD GetWindowThreadProcessId(
-        //      __in   HWND hWnd,
-        //      __out  LPDWORD lpdwProcessId
-        //  );
-        [DllImport("user32.dll")]
-        private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
-
-        public static string GetTopWindowText()
-        {
-            IntPtr hWnd = GetForegroundWindow();
-            int length = GetWindowTextLength(hWnd);
-            StringBuilder text = new StringBuilder(length + 1);
-            GetWindowText(hWnd, text, text.Capacity);
-            return text.ToString();
-        }
-
-        public static string GetTopWindowName()
-        {
-            IntPtr hWnd = GetForegroundWindow();
-            uint lpdwProcessId;
-            GetWindowThreadProcessId(hWnd, out lpdwProcessId);
-
-            var p = Process.GetProcessById((int)lpdwProcessId);
-            return p.ProcessName;
-        }
-        #endregion
-
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            // Store and save the current note
-            NoteChanged("");
+            StoreCurrentNote();
+            SaveNotes();
         }
-
 
         private void mChangeDataFileLocation_Click(object sender, EventArgs e)
         {
