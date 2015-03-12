@@ -27,21 +27,8 @@ namespace AttachNoteToWindow
             LoadNotes();
         }
 
-        void timer1_Tick(object sender, EventArgs e)
+        void NoteChanged(string newWindowTitle)
         {
-            var appName = GetTopWindowName();
-            if (appName.StartsWith(MyProcessName))
-            {
-                return;
-            }
-
-            // check vs an app list
-            var newWindowTitle = appName + ": " + GetTopWindowText();
-            if (newWindowTitle == _windowTitle)
-            {
-                return;
-            }
-
             // Store old note
             if (_windowTitle != null)
             {
@@ -78,6 +65,24 @@ namespace AttachNoteToWindow
 
                 this.TopMost = mTopmost.Checked;
             }
+        }
+
+        void timer1_Tick(object sender, EventArgs e)
+        {
+            var appName = GetTopWindowName();
+            if (appName.StartsWith(MyProcessName))
+            {
+                return;
+            }
+
+            // check vs an app list
+            var newWindowTitle = appName + ": " + GetTopWindowText();
+            if (newWindowTitle == _windowTitle)
+            {
+                return;
+            }
+
+            NoteChanged(newWindowTitle);
         }
 
         string _myProcessName;
@@ -219,7 +224,8 @@ namespace AttachNoteToWindow
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-            SaveNotes();
+            // Store and save the current note
+            NoteChanged("");
         }
 
 
