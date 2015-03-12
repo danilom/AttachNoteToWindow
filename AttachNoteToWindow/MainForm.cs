@@ -69,7 +69,6 @@ namespace LineConnector
 
                 // Show window
                 this.TopMost = true;
-                this.SetOpacity(this.Focused);
             }
             else
             {
@@ -77,8 +76,7 @@ namespace LineConnector
                 tbNote.Text = "";
                 tbNote.BackColor = Color.White;
 
-                this.TopMost = false;
-                this.SetOpacity(this.Focused);
+                this.TopMost = mTopmost.Checked;
             }
         }
 
@@ -252,7 +250,13 @@ namespace LineConnector
         }
         #endregion
 
-        private void button1_Click(object sender, EventArgs e)
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            SaveNotes();
+        }
+
+
+        private void mChangeDataFileLocation_Click(object sender, EventArgs e)
         {
             var oldNotesFile = GetNotesFilename();
             if (SelectNotesFile())
@@ -262,33 +266,17 @@ namespace LineConnector
             }
         }
 
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
+        private void bSettings_Click(object sender, EventArgs e)
         {
-            SaveNotes();
+            Button btnSender = (Button)sender;
+            Point ptLowerLeft = new Point(0, btnSender.Height);
+            ptLowerLeft = btnSender.PointToScreen(ptLowerLeft);
+            settingsMenu.Show(ptLowerLeft);
         }
 
-
-        #region Topmost and opacity
-        void SetOpacity(bool isActive)
+        private void mTopmost_CheckedChanged(object sender, EventArgs e)
         {
-            this.Opacity = this.TopMost && !isActive ? 0.85 : 1.0;
+            this.TopMost = mTopmost.Checked;
         }
-
-        private void cbTopMost_CheckedChanged(object sender, EventArgs e)
-        {
-            this.TopMost = cbTopMost.Checked;
-            SetOpacity(true);
-        }
-
-        private void MainForm_Activated(object sender, EventArgs e)
-        {
-            this.SetOpacity(true);
-        }
-
-        private void MainForm_Deactivate(object sender, EventArgs e)
-        {
-            this.SetOpacity(false);
-        }
-        #endregion
     }
 }

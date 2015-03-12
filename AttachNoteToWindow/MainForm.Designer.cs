@@ -29,12 +29,16 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.label1 = new System.Windows.Forms.Label();
             this.tbLineName = new System.Windows.Forms.TextBox();
             this.tbNote = new System.Windows.Forms.RichTextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            this.cbTopMost = new System.Windows.Forms.CheckBox();
+            this.settingsMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.mChangeDataFileLocation = new System.Windows.Forms.ToolStripMenuItem();
+            this.mTopmost = new System.Windows.Forms.ToolStripMenuItem();
+            this.bSettings = new System.Windows.Forms.Button();
+            this.settingsMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -56,7 +60,7 @@
             this.tbLineName.Margin = new System.Windows.Forms.Padding(5);
             this.tbLineName.Name = "tbLineName";
             this.tbLineName.ReadOnly = true;
-            this.tbLineName.Size = new System.Drawing.Size(319, 31);
+            this.tbLineName.Size = new System.Drawing.Size(276, 31);
             this.tbLineName.TabIndex = 1;
             // 
             // tbNote
@@ -64,10 +68,11 @@
             this.tbNote.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tbNote.Location = new System.Drawing.Point(7, 43);
+            this.tbNote.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.tbNote.Location = new System.Drawing.Point(3, 43);
             this.tbNote.Margin = new System.Windows.Forms.Padding(2);
             this.tbNote.Name = "tbNote";
-            this.tbNote.Size = new System.Drawing.Size(380, 189);
+            this.tbNote.Size = new System.Drawing.Size(389, 230);
             this.tbNote.TabIndex = 2;
             this.tbNote.Text = "";
             // 
@@ -77,48 +82,56 @@
             this.timer1.Interval = 200;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
-            // button1
+            // settingsMenu
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(7, 239);
-            this.button1.Margin = new System.Windows.Forms.Padding(2);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(98, 27);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Select File";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.settingsMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mChangeDataFileLocation,
+            this.mTopmost});
+            this.settingsMenu.Name = "contextMenu";
+            this.settingsMenu.Size = new System.Drawing.Size(213, 70);
             // 
-            // cbTopMost
+            // mChangeDataFileLocation
             // 
-            this.cbTopMost.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.cbTopMost.AutoSize = true;
-            this.cbTopMost.Location = new System.Drawing.Point(110, 241);
-            this.cbTopMost.Name = "cbTopMost";
-            this.cbTopMost.Size = new System.Drawing.Size(90, 24);
-            this.cbTopMost.TabIndex = 4;
-            this.cbTopMost.Text = "Topmost";
-            this.cbTopMost.UseVisualStyleBackColor = true;
-            this.cbTopMost.CheckedChanged += new System.EventHandler(this.cbTopMost_CheckedChanged);
+            this.mChangeDataFileLocation.Name = "mChangeDataFileLocation";
+            this.mChangeDataFileLocation.Size = new System.Drawing.Size(212, 22);
+            this.mChangeDataFileLocation.Text = "Change Data File Location";
+            this.mChangeDataFileLocation.Click += new System.EventHandler(this.mChangeDataFileLocation_Click);
+            // 
+            // mTopmost
+            // 
+            this.mTopmost.CheckOnClick = true;
+            this.mTopmost.Name = "mTopmost";
+            this.mTopmost.Size = new System.Drawing.Size(212, 22);
+            this.mTopmost.Text = "Keep Window on Top";
+            this.mTopmost.CheckedChanged += new System.EventHandler(this.mTopmost_CheckedChanged);
+            // 
+            // bSettings
+            // 
+            this.bSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.bSettings.Image = ((System.Drawing.Image)(resources.GetObject("bSettings.Image")));
+            this.bSettings.Location = new System.Drawing.Point(352, 4);
+            this.bSettings.Name = "bSettings";
+            this.bSettings.Size = new System.Drawing.Size(35, 34);
+            this.bSettings.TabIndex = 3;
+            this.bSettings.UseVisualStyleBackColor = true;
+            this.bSettings.Click += new System.EventHandler(this.bSettings_Click);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(394, 274);
-            this.Controls.Add(this.cbTopMost);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.bSettings);
             this.Controls.Add(this.tbNote);
             this.Controls.Add(this.tbLineName);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5);
             this.Name = "MainForm";
-            this.ShowIcon = false;
             this.Text = "Attach Notes To Windows";
-            this.Activated += new System.EventHandler(this.MainForm_Activated);
-            this.Deactivate += new System.EventHandler(this.MainForm_Deactivate);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
+            this.settingsMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -130,8 +143,10 @@
         private System.Windows.Forms.TextBox tbLineName;
         private System.Windows.Forms.RichTextBox tbNote;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.CheckBox cbTopMost;
+        private System.Windows.Forms.ContextMenuStrip settingsMenu;
+        private System.Windows.Forms.ToolStripMenuItem mChangeDataFileLocation;
+        private System.Windows.Forms.ToolStripMenuItem mTopmost;
+        private System.Windows.Forms.Button bSettings;
     }
 }
 
