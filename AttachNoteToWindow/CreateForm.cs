@@ -19,9 +19,9 @@ namespace AttachNoteToWindow
 
         private void CreateForm_Click(object sender, EventArgs e)
         {
-            if (Click != null) { Click(this, e); }
+            if (CreateNote != null) { CreateNote(this, e); }
         }
 
-        public event EventHandler Click;
+        public event EventHandler CreateNote;
     }
 }

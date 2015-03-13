@@ -88,7 +88,7 @@
             this.settingsMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mChangeDataFileLocation});
             this.settingsMenu.Name = "contextMenu";
-            this.settingsMenu.Size = new System.Drawing.Size(213, 48);
+            this.settingsMenu.Size = new System.Drawing.Size(213, 26);
             // 
             // mChangeDataFileLocation
             // 
@@ -119,8 +119,11 @@
             this.Controls.Add(this.tbLineName);
             this.Controls.Add(this.label1);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "NoteForm";
             this.Text = "Attach Note To Window";
             this.TopMost = true;

@@ -16,7 +16,7 @@ namespace AttachNoteToWindow
 {
     public partial class NoteForm : Form
     {
-        Form _createForm;
+        CreateForm _createForm;
 
         string _windowTitle;
         Dictionary<string, string> _notes = new Dictionary<string,string>();
@@ -26,13 +26,13 @@ namespace AttachNoteToWindow
             InitializeComponent();
 
             _createForm = new CreateForm();
-            _createForm.Click += _createForm_Click;
+            _createForm.CreateNote += _createForm_CreateNote;
 
             // Load notes
             LoadNotes();
         }
 
-        void _createForm_Click(object sender, EventArgs e)
+        void _createForm_CreateNote(object sender, EventArgs e)
         {
             _notes.Add(_windowTitle, "");
             NoteChanged(_windowTitle);
@@ -40,15 +40,19 @@ namespace AttachNoteToWindow
 
         void SwitchToCreateForm()
         {
-            _createForm.Show();
             // Must set AFTER showing
-            _createForm.Width = 22;
-            _createForm.Height = 22;
+            _createForm.Width = 24;
+            _createForm.Height = 24;
             this.Hide();
+
+            PositionNextToTarget(_createForm);
+            _createForm.Show();
         }
         void SwitchToNoteForm()
         {
             _createForm.Hide();
+
+            PositionNextToTarget(this);
             this.Show();
         }
 
@@ -87,28 +91,48 @@ namespace AttachNoteToWindow
 
         void timer1_Tick(object sender, EventArgs e)
         {
-            var appName = GetTopWindowName();
+            var appName = Win32.GetTopWindowName();
             if (appName.StartsWith(MyProcessName))
             {
                 return;
             }
 
-            var newWindowTitle = appName + ": " + GetTopWindowText();
-            // Positioning
-            if (this.Visible)
-            {
+            var newWindowTitle = appName + ": " + Win32.GetTopWindowText();
 
-            }
-            if (_createForm.Visible)
-            {
-
-            }
-
-            
             if (newWindowTitle != _windowTitle)
             {
                 NoteChanged(newWindowTitle);
             }
+
+            // Positioning
+            if (this.Visible)
+            {
+                PositionNextToTarget(this);
+            }
+            if (_createForm.Visible)
+            {
+                PositionNextToTarget(_createForm);
+            }
+        }
+
+        static void PositionNextToTarget(Form form)
+        {
+            var target = Win32.GetTopWindowBounds();
+
+            // Attach to the left of the target
+            var bounds = new Rectangle(
+                target.X - form.Width,
+                target.Y,
+                form.Width, form.Height);
+
+            // Reposition if off-screen
+            var wa = Screen.FromPoint(target.Location).WorkingArea;
+            if (bounds.X < wa.X)
+            {
+                bounds.X = wa.X;
+            }
+
+            form.Bounds = bounds;
         }
 
         string _myProcessName;
@@ -203,48 +227,6 @@ namespace AttachNoteToWindow
             Properties.Settings.Default.FilePath = fd.FileName;
             Properties.Settings.Default.Save();
             return true;
-        }
-        #endregion
-
-        #region Win32
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
-
-        [DllImport("user32.dll")]
-        static extern int GetWindowTextLength(IntPtr hWnd);
-
-        //  int GetWindowText(
-        //      __in   HWND hWnd,
-        //      __out  LPTSTR lpString,
-        //      __in   int nMaxCount
-        //  );
-        [DllImport("user32.dll")]
-        private static extern int GetWindowText(IntPtr hWnd, StringBuilder lpString, int nMaxCount);
-
-        //  DWORD GetWindowThreadProcessId(
-        //      __in   HWND hWnd,
-        //      __out  LPDWORD lpdwProcessId
-        //  );
-        [DllImport("user32.dll")]
-        private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
-
-        public static string GetTopWindowText()
-        {
-            IntPtr hWnd = GetForegroundWindow();
-            int length = GetWindowTextLength(hWnd);
-            StringBuilder text = new StringBuilder(length + 1);
-            GetWindowText(hWnd, text, text.Capacity);
-            return text.ToString();
-        }
-
-        public static string GetTopWindowName()
-        {
-            IntPtr hWnd = GetForegroundWindow();
-            uint lpdwProcessId;
-            GetWindowThreadProcessId(hWnd, out lpdwProcessId);
-
-            var p = Process.GetProcessById((int)lpdwProcessId);
-            return p.ProcessName;
         }
         #endregion
 
