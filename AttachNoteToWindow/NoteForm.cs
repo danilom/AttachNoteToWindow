@@ -14,32 +14,51 @@ using System.Diagnostics;
 
 namespace AttachNoteToWindow
 {
-    public partial class MainForm : Form
+    public partial class NoteForm : Form
     {
+        Form _createForm;
+
         string _windowTitle;
         Dictionary<string, string> _notes = new Dictionary<string,string>();
 
-        public MainForm()
+        public NoteForm()
         {
             InitializeComponent();
+
+            _createForm = new CreateForm();
+            _createForm.Click += _createForm_Click;
 
             // Load notes
             LoadNotes();
         }
 
+        void _createForm_Click(object sender, EventArgs e)
+        {
+            _notes.Add(_windowTitle, "");
+            NoteChanged(_windowTitle);
+        }
+
+        void SwitchToCreateForm()
+        {
+            _createForm.Show();
+            // Must set AFTER showing
+            _createForm.Width = 22;
+            _createForm.Height = 22;
+            this.Hide();
+        }
+        void SwitchToNoteForm()
+        {
+            _createForm.Hide();
+            this.Show();
+        }
+
         void NoteChanged(string newWindowTitle)
         {
             // Store old note
-            if (_windowTitle != null)
+            if (_windowTitle != null && 
+                _notes.ContainsKey(_windowTitle))
             {
-                if (tbNote.Text.Trim() == "")
-                {
-                    _notes.Remove(_windowTitle);
-                }
-                else
-                {
-                    _notes[_windowTitle] = tbNote.Text;
-                }
+                _notes[_windowTitle] = tbNote.Text;
                 SaveNotes();
             }
 
@@ -55,15 +74,14 @@ namespace AttachNoteToWindow
                 tbNote.BackColor = Color.LightYellow;
 
                 // Show window
-                this.TopMost = true;
+                SwitchToNoteForm();
             }
             else
             {
-                // Note does not exist
                 tbNote.Text = "";
-                tbNote.BackColor = Color.White;
 
-                this.TopMost = mTopmost.Checked;
+                // Note does not exist
+                SwitchToCreateForm();
             }
         }
 
@@ -75,14 +93,22 @@ namespace AttachNoteToWindow
                 return;
             }
 
-            // check vs an app list
             var newWindowTitle = appName + ": " + GetTopWindowText();
-            if (newWindowTitle == _windowTitle)
+            // Positioning
+            if (this.Visible)
             {
-                return;
+
+            }
+            if (_createForm.Visible)
+            {
+
             }
 
-            NoteChanged(newWindowTitle);
+            
+            if (newWindowTitle != _windowTitle)
+            {
+                NoteChanged(newWindowTitle);
+            }
         }
 
         string _myProcessName;
@@ -245,11 +271,6 @@ namespace AttachNoteToWindow
             Point ptLowerLeft = new Point(0, btnSender.Height);
             ptLowerLeft = btnSender.PointToScreen(ptLowerLeft);
             settingsMenu.Show(ptLowerLeft);
-        }
-
-        private void mTopmost_CheckedChanged(object sender, EventArgs e)
-        {
-            this.TopMost = mTopmost.Checked;
         }
 
         private void tbNote_LinkClicked(object sender, LinkClickedEventArgs e)

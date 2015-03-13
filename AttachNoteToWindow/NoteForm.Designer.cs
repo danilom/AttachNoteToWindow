@@ -1,6 +1,6 @@
 ﻿namespace AttachNoteToWindow
 {
-    partial class MainForm
+    partial class NoteForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,14 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NoteForm));
             this.label1 = new System.Windows.Forms.Label();
             this.tbLineName = new System.Windows.Forms.TextBox();
             this.tbNote = new System.Windows.Forms.RichTextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.settingsMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.mChangeDataFileLocation = new System.Windows.Forms.ToolStripMenuItem();
-            this.mTopmost = new System.Windows.Forms.ToolStripMenuItem();
             this.bSettings = new System.Windows.Forms.Button();
             this.settingsMenu.SuspendLayout();
             this.SuspendLayout();
@@ -87,8 +86,7 @@
             // settingsMenu
             // 
             this.settingsMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.mChangeDataFileLocation,
-            this.mTopmost});
+            this.mChangeDataFileLocation});
             this.settingsMenu.Name = "contextMenu";
             this.settingsMenu.Size = new System.Drawing.Size(213, 48);
             // 
@@ -98,14 +96,6 @@
             this.mChangeDataFileLocation.Size = new System.Drawing.Size(212, 22);
             this.mChangeDataFileLocation.Text = "Change Data File Location";
             this.mChangeDataFileLocation.Click += new System.EventHandler(this.mChangeDataFileLocation_Click);
-            // 
-            // mTopmost
-            // 
-            this.mTopmost.CheckOnClick = true;
-            this.mTopmost.Name = "mTopmost";
-            this.mTopmost.Size = new System.Drawing.Size(212, 22);
-            this.mTopmost.Text = "Keep Window on Top";
-            this.mTopmost.CheckedChanged += new System.EventHandler(this.mTopmost_CheckedChanged);
             // 
             // bSettings
             // 
@@ -118,7 +108,7 @@
             this.bSettings.UseVisualStyleBackColor = true;
             this.bSettings.Click += new System.EventHandler(this.bSettings_Click);
             // 
-            // MainForm
+            // NoteForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -130,8 +120,9 @@
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(5);
-            this.Name = "MainForm";
+            this.Name = "NoteForm";
             this.Text = "Attach Note To Window";
+            this.TopMost = true;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.settingsMenu.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -147,7 +138,6 @@
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ContextMenuStrip settingsMenu;
         private System.Windows.Forms.ToolStripMenuItem mChangeDataFileLocation;
-        private System.Windows.Forms.ToolStripMenuItem mTopmost;
         private System.Windows.Forms.Button bSettings;
     }
 }

@@ -59,5 +59,15 @@ namespace AttachNoteToWindow.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap stock_notes {
+            get {
+                object obj = ResourceManager.GetObject("stock_notes", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }
