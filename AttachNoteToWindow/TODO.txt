@@ -1,4 +1,25 @@
-﻿[x] Make hyperlinks in notes open in default browser
+﻿
+Note on ACTIVE window (not on potentially all windows)
+- Button to add note if inactive
+- Sticks to the edge
+
+
+
+
+
+====
+[x] Make hyperlinks in notes open in default browser
+
+[ ] Keep notes attached to relevant window
+	- re-frame concepts:
+		[ ] New note button to create note for current window (don't just detect whether a note is empty)
+		[ ] Delete note button
+		[ ] IsAttached property/event when an attached window is shown
+
+		[ ] Pop up when necessary and follow the window
+		[ ] Allow repositioning relative to the window
+		[ ] Detect window moves
+
 
 [x] P2: Default initial file (in AppData)
 [ ] Store a note object instead of simple text

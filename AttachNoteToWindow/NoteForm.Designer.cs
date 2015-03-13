@@ -99,6 +99,7 @@
             // 
             // bSettings
             // 
+            this.bSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.bSettings.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.bSettings.Image = ((System.Drawing.Image)(resources.GetObject("bSettings.Image")));
             this.bSettings.Location = new System.Drawing.Point(352, 4);
