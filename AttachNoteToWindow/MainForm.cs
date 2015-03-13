@@ -81,8 +81,6 @@ namespace AttachNoteToWindow
                 return;
             }
 
-            var bounds = Win32.GetTopWindowBounds();
-
             StoreCurrentNote();
             SaveNotes();
 
@@ -90,6 +88,30 @@ namespace AttachNoteToWindow
             _windowTitle = newWindowTitle;
 
             ShowNewNote(_windowTitle);
+
+            // Move to the edge of the note
+            var bounds = Win32.GetTopWindowBounds();
+
+            if (_notes.ContainsKey(_windowTitle))
+            {
+                // Suggested bounds
+                var noteBounds = new Rectangle(bounds.Left - 400, bounds.Top, 400, 250); 
+
+                // Fit within screen                
+                var screen = Screen.FromPoint(bounds.Location);
+                if (screen.WorkingArea.Left > noteBounds.Left)
+                {
+                    noteBounds.X = screen.WorkingArea.Left;
+                }
+                if (screen.WorkingArea.Top > noteBounds.Top)
+                {
+                    noteBounds.Y = screen.WorkingArea.Top;
+                }
+
+                // Set
+                this.Bounds = noteBounds;
+            }
+
         }
 
         string _myProcessName;
